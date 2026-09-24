@@ -41,6 +41,32 @@
         -->
         <div id="listings" class="row"></div>
       </section>
+
+      <!-- 
+        One shared modal for ALL listings. We don't create a separate modal
+        per listing — instead, JS will fill in these elements with whichever
+        listing was clicked, right before showing it.
+      -->
+        <div class="modal fade" id="listingModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalListingName"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <img id="modalListingImage" class="img-fluid mb-3" alt="" />
+                <p id="modalListingPrice" class="fw-bold"></p>
+                <p id="modalListingDescription"></p>
+                <p id="modalListingAmenities"></p>
+                <div class="d-flex align-items-center gap-2">
+                <img id="modalHostImage" width="48" height="48" style="border-radius: 50%; object-fit: cover;" alt="" />
+                <span id="modalHostName"></span>
+                </div>
+            </div>
+            </div>
+        </div>
+        </div>
     </div>
 
     <!-- our JS runs after the DOM above exists, so #listings is ready to be filled in -->
