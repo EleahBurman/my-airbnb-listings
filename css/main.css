@@ -1,0 +1,12 @@
+/* make every listing thumbnail the same size and crop it nicely,
+   no matter what dimensions the original photo is */
+#listings .listing img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+}
+
+/* space out the cards vertically when they wrap to a new row */
+.listing {
+  margin-bottom: 24px;
+}
