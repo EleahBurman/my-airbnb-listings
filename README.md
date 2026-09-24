@@ -5,6 +5,7 @@ JSON file using `fetch()` and `async/await`, and displays each as a
 Bootstrap card.
 
 **🔗 Live demo:** 
+https://eleahburman.github.io/my-airbnb-listings/
 
 ## Features
 - Loads data asynchronously with `fetch`/`await` — confirmed via console
