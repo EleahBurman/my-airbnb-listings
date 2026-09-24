@@ -23,7 +23,7 @@ function MainModule(listingsID = "#listings") {
     const amenityList = amenities.slice(0, 6).join(", ");
 
     return `<div class="col-4">
-  <div class="listing card">
+  <div class="listing card" style="cursor: pointer;" onclick="main.showListingDetails(${listing.id})">
     <img
       src="${listing.picture_url}"
       class="card-img-top"
@@ -54,6 +54,29 @@ function MainModule(listingsID = "#listings") {
   </div>
   </div>
   `;
+  }
+  
+    // Finds the clicked listing by id, fills the modal with its data, and shows it
+  function showListingDetails(id) {
+    const listing = currentListings.find((l) => l.id === id);
+    if (!listing) return;
+
+    document.getElementById("modalListingName").textContent = listing.name;
+    document.getElementById("modalListingImage").src = listing.picture_url;
+    document.getElementById("modalListingPrice").textContent = `${listing.price} / night`;
+    document.getElementById("modalListingDescription").innerHTML = listing.description;
+
+    const amenities = parseAmenities(listing.amenities);
+    document.getElementById("modalListingAmenities").textContent =
+      "Amenities: " + amenities.join(", ");
+
+    document.getElementById("modalHostImage").src = listing.host_picture_url;
+    document.getElementById("modalHostName").textContent = `Hosted by ${listing.host_name}`;
+
+    // Bootstrap's JS API: grab (or create) the modal instance, then show it
+    const modalEl = document.getElementById("listingModal");
+    const modal = bootstrap.Modal.getOrCreateInstance(modalEl);
+    modal.show();
   }
 
   // Wipes out whatever is currently in #listings and re-fills it
@@ -98,7 +121,7 @@ function MainModule(listingsID = "#listings") {
   me.redraw = redraw;
   me.loadData = loadData;
   me.applySorting = applySorting;
-
+  me.showListingDetails = showListingDetails
   return me;
 }
 
