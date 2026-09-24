@@ -24,7 +24,16 @@
 
       <section>
         <h2>Listings</h2>
-
+        <!-- Sort dropdown-->
+         <div class="mb-3">
+            <label for="sortSelect" class="form-label">Sort by:</label>
+            <select id="sortSelect" class="form-select w-auto d-inline-block">
+                <option value="default">Default order</option>
+                <option value="priceAsc">Price: Low to High</option>
+                <option value="priceDesc">Price: High to Low</option>
+                <option value="rating">Highest Rated</option>
+            </select>
+        </div>
         <!--
           This div starts EMPTY on purpose.
           main.js will fetch the JSON data and inject one
