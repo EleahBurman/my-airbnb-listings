@@ -4,17 +4,7 @@ function MainModule(listingsID = "#listings") {
   const me = {};
 
   const listingsElement = document.querySelector(listingsID);
-
-  // amenities comes from the JSON as a STRING that looks like an array,
-  // e.g. '["Wifi", "Kitchen", "Free parking"]' — so we have to JSON.parse it
-  // before we can use it as a real array.
-  function parseAmenities(raw) {
-    try {
-      return JSON.parse(raw);
-    } catch (e) {
-      return [];
-    }
-  }
+  let currentListings = []; // keep the 50 listings around so we can re-sort them
 
   // amenities comes from the JSON as a STRING that looks like an array,
   // e.g. '["Wifi", "Kitchen", "Free parking"]' — so we have to JSON.parse it
@@ -78,17 +68,43 @@ function MainModule(listingsID = "#listings") {
     const res = await fetch("./airbnb_sf_listings_500.json");
     const listings = await res.json();
 
-
     console.log("Total listings in file:", listings.length);
     console.log("Listings being displayed:", listings.slice(0, 50).length);
-    me.redraw(listings.slice(0, 50));
+
+    currentListings = listings.slice(0, 50);
+    me.redraw(currentListings);
+  }
+
+  // Converts "$187.00" strings into numbers so prices can be compared
+  function parsePrice(priceString) {
+    return parseFloat(priceString.replace(/[$,]/g, "")) || 0;
+  }
+
+  // Re-sorts whatever is currently loaded and redraws
+  function applySorting(sortBy) {
+    const sorted = [...currentListings];
+
+    if (sortBy === "priceAsc") {
+      sorted.sort((a, b) => parsePrice(a.price) - parsePrice(b.price));
+    } else if (sortBy === "priceDesc") {
+      sorted.sort((a, b) => parsePrice(b.price) - parsePrice(a.price));
+    } else if (sortBy === "rating") {
+      sorted.sort((a, b) => (b.review_scores_rating || 0) - (a.review_scores_rating || 0));
+    }
+
+    redraw(sorted);
   }
 
   me.redraw = redraw;
   me.loadData = loadData;
+  me.applySorting = applySorting;
 
   return me;
 }
 
 const main = MainModule();
 main.loadData();
+
+document.getElementById("sortSelect").addEventListener("change", (e) => {
+  main.applySorting(e.target.value);
+});
