@@ -78,6 +78,9 @@ function MainModule(listingsID = "#listings") {
     const res = await fetch("./airbnb_sf_listings_500.json");
     const listings = await res.json();
 
+
+    console.log("Total listings in file:", listings.length);
+    console.log("Listings being displayed:", listings.slice(0, 50).length);
     me.redraw(listings.slice(0, 50));
   }
 
