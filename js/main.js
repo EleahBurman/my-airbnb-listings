@@ -23,9 +23,10 @@ function MainModule(listingsID = "#listings") {
     return `<div class="col-4">
   <div class="listing card">
     <img
-      src="${listing.picture_url}"
-      class="card-img-top"
-      alt="${listing.name}"
+        src="${listing.picture_url}"
+        class="card-img-top"
+        alt="${listing.name}"
+        onerror="this.src='https://images.unsplash.com/photo-1525953776754-6c4b7ee655ab?w=400&h=220&fit=crop&auto=format'"
     />
     <div class="card-body">
       <h2 class="card-title">${listing.name}</h2>
